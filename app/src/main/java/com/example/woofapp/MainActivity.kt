@@ -15,8 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +33,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -58,7 +62,10 @@ class MainActivity : ComponentActivity() {
 fun WoofApp() {
     LazyColumn {
         items(dogs) {
-            DogItem(dog = it)
+            DogItem(
+                dog = it,
+                modifier = Modifier.padding(8.dp).clip(RoundedCornerShape(25.dp))
+            )
         }
     }
 }
@@ -71,9 +78,11 @@ fun DogIcon(
     Image(
         modifier = modifier
             .size(64.dp)
-            .padding(8.dp),
+            .padding(8.dp)
+            .clip(shape = RoundedCornerShape(50.dp)),
         painter = painterResource(dogIcon),
-        contentDescription = null
+        contentDescription = null,
+        contentScale = ContentScale.Crop
     )
 }
 
@@ -82,14 +91,19 @@ fun DogItem(
     dog: Dog,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    Card(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(8.dp)
     ) {
-        DogIcon(dog.imageResourceId)
-        DogInformation(dog.name, dog.age)
+        Row(
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            DogIcon(dog.imageResourceId)
+            DogInformation(dog.name, dog.age)
+        }
     }
+
 }
 
 @Composable
@@ -131,7 +145,7 @@ private fun DogItemButton(
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    WoofAppTheme {
+    WoofAppTheme(darkTheme = true) {
         WoofApp()
     }
 }
