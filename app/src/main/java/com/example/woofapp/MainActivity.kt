@@ -153,7 +153,7 @@ fun DogItem(
             DogHobby(
                 dog.hobbies,
                 modifier = Modifier
-                    .padding(start = 26.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
+                    .padding(start = 24.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
             )
         }
     }
