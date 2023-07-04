@@ -189,7 +189,6 @@ fun DogInformation(
         )
         Text(
             text = stringResource(R.string.years_old, dogAge),
-            //style = MaterialTheme.typography.bodyLarge
         )
     }
 }
