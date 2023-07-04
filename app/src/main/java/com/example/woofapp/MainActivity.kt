@@ -1,5 +1,6 @@
 package com.example.woofapp
 
+import android.graphics.fonts.FontStyle
 import android.media.Image
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,9 +20,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -33,11 +37,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.woofapp.data.Dog
 import com.example.woofapp.data.dogs
 
@@ -58,16 +65,52 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WoofApp() {
-    LazyColumn {
-        items(dogs) {
-            DogItem(
-                dog = it,
-                modifier = Modifier.padding(8.dp).clip(RoundedCornerShape(25.dp))
-            )
+    Scaffold(
+        topBar = {
+            WoofTopAppBar()
+        }
+    ) { it->
+        LazyColumn(contentPadding = it){
+            items(dogs){
+                DogItem(
+                    dog = it,
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .clip(RoundedCornerShape(50.dp))
+                )
+            }
         }
     }
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WoofTopAppBar(modifier: Modifier = Modifier){
+    CenterAlignedTopAppBar(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(top = 8.dp)
+            ){
+                androidx.compose.foundation.Image(
+                    painter = painterResource(R.drawable.ic_woof_logo),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(64.dp)
+                        .padding(8.dp)
+                )
+                Text(
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.displayLarge
+                )
+           }
+        },
+        modifier = Modifier
+    )
 }
 
 @Composable
@@ -115,10 +158,13 @@ fun DogInformation(
     Column(modifier = modifier) {
         Text(
             text = stringResource(dogName),
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier.padding(top = 8.dp),
+            fontWeight = FontWeight.Bold,
+            fontSize = 20.sp
         )
         Text(
             text = stringResource(R.string.years_old, dogAge),
+            //style = MaterialTheme.typography.bodyLarge
         )
     }
 }
