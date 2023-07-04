@@ -96,7 +96,7 @@ fun WoofTopAppBar(modifier: Modifier = Modifier){
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier.padding(top = 8.dp)
             ){
-                androidx.compose.foundation.Image(
+                Image(
                     painter = painterResource(R.drawable.ic_woof_logo),
                     contentDescription = null,
                     modifier = Modifier
