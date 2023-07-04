@@ -80,7 +80,7 @@ fun WoofApp() {
                     dog = it,
                     modifier = Modifier
                         .padding(8.dp)
-                        .clip(RoundedCornerShape(50.dp))
+                        .clip(RoundedCornerShape(25.dp))
                 )
             }
         }
@@ -139,15 +139,22 @@ fun DogItem(
     Card(
         modifier = modifier
     ) {
-        Row(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(8.dp)
-        ) {
-            DogIcon(dog.imageResourceId)
-            DogInformation(dog.name, dog.age)
-            Spacer(modifier = Modifier.weight(1f))
-            DogItemButton(expanded = expanded, onClick = { /*TODO*/ })
+        Column() {
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(8.dp)
+            ) {
+                DogIcon(dog.imageResourceId)
+                DogInformation(dog.name, dog.age)
+                Spacer(modifier = Modifier.weight(1f))
+                DogItemButton(expanded = expanded, onClick = { /*TODO*/ })
+            }
+            DogHobby(
+                dog.hobbies,
+                modifier = Modifier
+                    .padding(start = 26.dp, top = 8.dp, end = 16.dp, bottom = 16.dp)
+            )
         }
     }
 
@@ -191,6 +198,22 @@ private fun DogItemButton(
     }
 }
 
+@Composable
+fun DogHobby(
+    @StringRes dogHobby: Int,
+    modifier: Modifier = Modifier
+){
+    Column(modifier = modifier) {
+        Text(
+            text = stringResource(R.string.about),
+            style = MaterialTheme.typography.labelSmall
+        )
+        Text(
+            text = stringResource(dogHobby),
+            style = MaterialTheme.typography.bodyLarge
+        )
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
